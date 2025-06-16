@@ -1,0 +1,246 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    @apply antialiased;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  }
+
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-light-border dark:bg-dark-border rounded-md;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-light-secondary dark:bg-dark-secondary;
+  }
+
+  /* Focus styles */
+  *:focus {
+    @apply outline-none ring-2 ring-light-accent dark:ring-dark-accent ring-opacity-50;
+  }
+
+  /* Selection styles */
+  ::selection {
+    @apply bg-light-accent dark:bg-dark-accent text-white bg-opacity-80;
+  }
+}
+
+/* Component layer styles */
+@layer components {
+  /* Button base styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-light-accent hover:bg-light-accent/90 text-white dark:bg-dark-accent dark:hover:bg-dark-accent/90 focus:ring-light-accent dark:focus:ring-dark-accent;
+  }
+
+  .btn-secondary {
+    @apply bg-light-border hover:bg-light-secondary text-light-primary dark:bg-dark-border dark:hover:bg-dark-secondary dark:text-dark-primary focus:ring-light-border dark:focus:ring-dark-border;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-light-border dark:hover:bg-dark-border text-light-primary dark:text-dark-primary;
+  }
+
+  .btn-danger {
+    @apply bg-red-500 hover:bg-red-600 text-white focus:ring-red-500;
+  }
+
+  /* Input styles */
+  .input {
+    @apply w-full px-3 py-2 bg-light-panel dark:bg-dark-panel border border-light-border dark:border-dark-border rounded-lg text-light-primary dark:text-dark-primary placeholder-light-secondary dark:placeholder-dark-secondary focus:ring-2 focus:ring-light-accent dark:focus:ring-dark-accent focus:border-transparent transition-colors;
+  }
+
+  /* Range input (slider) styles */
+  input[type="range"] {
+    @apply appearance-none bg-transparent cursor-pointer;
+  }
+
+  input[type="range"]::-webkit-slider-track {
+    @apply w-full h-2 bg-light-border dark:bg-dark-border rounded-lg;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none h-4 w-4 bg-light-accent dark:bg-dark-accent rounded-full cursor-pointer;
+  }
+
+  input[type="range"]::-moz-range-track {
+    @apply w-full h-2 bg-light-border dark:bg-dark-border rounded-lg border-none;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    @apply h-4 w-4 bg-light-accent dark:bg-dark-accent rounded-full cursor-pointer border-none;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-light-panel dark:bg-dark-panel border border-light-border dark:border-dark-border rounded-lg shadow-sm;
+  }
+
+  /* Panel styles */
+  .panel {
+    @apply bg-light-panel dark:bg-dark-panel border border-light-border dark:border-dark-border rounded-lg p-6;
+  }
+
+  /* Sidebar styles */
+  .sidebar {
+    @apply bg-light-panel dark:bg-dark-panel border-r border-light-border dark:border-dark-border;
+  }
+
+  /* Menu item styles */
+  .menu-item {
+    @apply flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors;
+  }
+
+  .menu-item-active {
+    @apply bg-light-accent dark:bg-dark-accent text-white;
+  }
+
+  .menu-item-inactive {
+    @apply text-light-secondary dark:text-dark-secondary hover:bg-light-border dark:hover:bg-dark-border hover:text-light-primary dark:hover:text-dark-primary;
+  }
+
+  .menu-item-disabled {
+    @apply text-light-secondary/50 dark:text-dark-secondary/50 cursor-not-allowed;
+  }
+
+  /* Code block styles */
+  .code-block {
+    @apply bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-lg p-4 font-mono text-sm overflow-x-auto;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-light-border dark:border-dark-border border-t-light-accent dark:border-t-dark-accent;
+  }
+
+  /* Tooltip styles */
+  .tooltip {
+    @apply absolute z-50 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900 rounded shadow-lg whitespace-nowrap;
+  }
+}
+
+/* Utility layer styles */
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  /* Text utilities */
+  .text-gradient {
+    @apply bg-gradient-to-r from-light-accent to-light-highlight dark:from-dark-accent dark:to-dark-highlight bg-clip-text text-transparent;
+  }
+
+  /* Layout utilities */
+  .sidebar-width {
+    width: 240px;
+  }
+
+  .sidebar-width-collapsed {
+    width: 64px;
+  }
+
+  /* Scroll utilities */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Dark mode toggle transition */
+.theme-transition * {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+} 
