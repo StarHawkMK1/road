@@ -51,12 +51,12 @@ export interface PromptUpdate {
 export type LLMProviderType = 'openai' | 'anthropic' | 'google' | 'groq' | 'huggingface'
 
 export interface LLMProvider {
-  id: LLMProviderType
+  id: string
   name: string
   description: string
   available: boolean
-  apiKeyRequired: boolean
-  features: string[]
+  configured: boolean
+  error?: string
 }
 
 export interface LLMModel {
@@ -105,8 +105,8 @@ export interface ModelInfo {
 }
 
 export interface ChatRequest {
-  model_name: string
-  model_provider: LLMProviderType
+  llm_model_name: string
+  llm_model_provider: LLMProviderType
   messages: ChatMessage[]
   system_prompt?: string
   parameters: LLMParameters
@@ -116,8 +116,8 @@ export interface ChatRequest {
 
 export interface ChatResponse {
   message: ChatMessage
-  model_name: string
-  model_provider: string
+  llm_model_name: string
+  llm_model_provider: string
   parameters: LLMParameters
   usage?: {
     prompt_tokens: number
@@ -179,4 +179,4 @@ export interface SearchParams {
   sort_by?: string
   sort_order?: 'asc' | 'desc'
   filters?: Record<string, any>
-} 
+}

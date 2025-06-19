@@ -1,0 +1,154 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Structure
+road
+├── .env.example
+├── .gitignore
+├── README.md
+├── backend
+│   ├── __init__.py
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── api
+│   │   │   ├── __init__.py
+│   │   │   └── v1
+│   │   │       ├── __init__.py
+│   │   │       ├── dependencies.py
+│   │   │       └── endpoints
+│   │   │           ├── __init__.py
+│   │   │           ├── llm_playground.py
+│   │   │           └── prompts.py
+│   │   ├── core
+│   │   │   ├── __init__.py
+│   │   │   └── config.py
+│   │   ├── db
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py
+│   │   │   ├── session.py
+│   │   │   └── test_db_connection.py
+│   │   ├── main.py
+│   │   ├── schemas
+│   │   │   ├── __init__.py
+│   │   │   ├── llm.py
+│   │   │   └── prompt.py
+│   │   ├── service
+│   │   │   └── rag
+│   │   └── services
+│   │       ├── __init__.py
+│   │       ├── ab_testing
+│   │       ├── conversation_service.py
+│   │       ├── evaluation
+│   │       ├── llm_factory.py
+│   │       ├── llm_providers
+│   │       │   ├── __init__.py
+│   │       │   ├── anthropic.py
+│   │       │   ├── base_provider.py
+│   │       │   ├── google.py
+│   │       │   ├── groq.py
+│   │       │   ├── huggingface.py
+│   │       │   └── openai.py
+│   │       ├── monitoring
+│   │       ├── opensearch
+│   │       ├── prompt_service.py
+│   │       └── tracking
+│   ├── data
+│   │   └── prompts
+│   │       └── AIGen_system_prompt_1.0.json
+│   ├── requirements.txt
+│   └── tests
+│       └── test_db_connection.py
+├── database
+│   ├── init.sql
+│   └── migrations
+├── docker
+│   ├── backend
+│   │   └── Dockerfile
+│   └── frontend
+│       └── Dockerfile
+├── docker-compose.yml
+├── docs
+│   ├── api
+│   │   └── README.md
+│   ├── architecture
+│   │   └── README.md
+│   └── user-guide
+├── env.example
+├── frontend
+│   ├── dist
+│   │   ├── assets
+│   │   │   ├── index-DuUiPmCp.css
+│   │   │   ├── index-FHaQOdaI.js
+│   │   │   └── index-FHaQOdaI.js.map
+│   │   └── index.html
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── public
+│   ├── src
+│   │   ├── App.tsx
+│   │   ├── assets
+│   │   ├── components
+│   │   │   ├── common
+│   │   │   │   ├── Badge.tsx
+│   │   │   │   ├── Button.tsx
+│   │   │   │   ├── Card.tsx
+│   │   │   │   ├── Input.tsx
+│   │   │   │   ├── Loading.tsx
+│   │   │   │   ├── Modal.tsx
+│   │   │   │   ├── Select.tsx
+│   │   │   │   ├── Textarea.tsx
+│   │   │   │   ├── Tooltip.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── features
+│   │   │   │   ├── ab-testing
+│   │   │   │   ├── evaluation
+│   │   │   │   ├── llm-layground
+│   │   │   │   ├── monitoring
+│   │   │   │   ├── opensearch
+│   │   │   │   ├── prompt-management
+│   │   │   │   ├── rag-builder
+│   │   │   │   └── rag-tracker
+│   │   │   ├── layout
+│   │   │   │   ├── Header.tsx
+│   │   │   │   ├── Layout.tsx
+│   │   │   │   └── Sidebar.tsx
+│   │   │   ├── llm
+│   │   │   │   ├── ChatInterface.tsx
+│   │   │   │   ├── ModelSelector.tsx
+│   │   │   │   ├── ParameterPanel.tsx
+│   │   │   │   └── index.ts
+│   │   │   └── prompt
+│   │   │       ├── PromptEditor.tsx
+│   │   │       ├── PromptLibrary.tsx
+│   │   │       ├── PromptTemplateSelector.tsx
+│   │   │       ├── TemplateSelector.tsx
+│   │   │       └── index.ts
+│   │   ├── hooks
+│   │   │   └── useTheme.ts
+│   │   ├── lib
+│   │   │   ├── api.ts
+│   │   │   └── utils.ts
+│   │   ├── main.tsx
+│   │   ├── pages
+│   │   │   ├── ABTesting.tsx
+│   │   │   ├── Evaluation.tsx
+│   │   │   ├── LLMPlayground.tsx
+│   │   │   ├── Monitoring.tsx
+│   │   │   ├── OpenSearchManager.tsx
+│   │   │   ├── PromptManagement.tsx
+│   │   │   ├── RAGBuilder.tsx
+│   │   │   └── RAGTracker.tsx
+│   │   ├── services
+│   │   ├── styles
+│   │   │   └── globals.css
+│   │   └── types
+│   │       └── index.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.json
+│   └── vite.config.ts
+
+└── query

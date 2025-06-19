@@ -28,15 +28,15 @@ class OpenAIProvider(BaseLLMProvider):
         """Get list of available OpenAI models."""
         models = [
             ModelInfo(
-                name="gpt-4",
+                name="gpt-4.1",
                 provider=LLMProvider.OPENAI,
-                description="GPT-4 - Most capable model, great for complex tasks",
-                max_tokens=8192,
+                description="GPT-4.1 - 복잡한 작업을 위한 플래그십 GPT 모델",
+                max_tokens=32768,
                 supports_streaming=True,
                 supports_functions=True,
                 parameters={
                     "temperature": {"min": 0, "max": 2, "default": 1},
-                    "max_tokens": {"min": 1, "max": 8192, "default": 1000},
+                    "max_tokens": {"min": 1, "max": 32768, "default": 20000},
                     "top_p": {"min": 0, "max": 1, "default": 1},
                     "presence_penalty": {"min": -2, "max": 2, "default": 0},
                     "frequency_penalty": {"min": -2, "max": 2, "default": 0}

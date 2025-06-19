@@ -8,7 +8,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://road_user:road_password@postgres:5432/road_db
+      - DATABASE_URL=postgresql://root:tomato@localhost:5432/road_dev
       - REDIS_URL=redis://redis:6379
     volumes:
       - ./backend:/app

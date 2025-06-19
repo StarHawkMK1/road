@@ -20,6 +20,14 @@
 - **듀얼 저장**: JSON 파일 및 데이터베이스 동시 저장 지원
 - **메타데이터 관리**: 작성자, 생성일, 수정일 등 추적
 
+### 🏗️ RAG Builder (새로 추가!)
+- **비주얼 워크플로우 디자이너**: React Flow 기반 드래그 앤 드롭 인터페이스
+- **다양한 노드 타입**: Input, LLM, RAG 컴포넌트, Agent, Processing 노드 지원
+- **실시간 실행**: 워크플로우 실행 과정을 시각적으로 모니터링
+- **템플릿 시스템**: 사전 정의된 RAG 파이프라인 템플릿 제공
+- **실행 히스토리**: 워크플로우 실행 기록 및 성능 추적
+- **WebSocket 스트리밍**: 실시간 실행 상태 업데이트
+
 ## 🚀 빠른 시작
 
 ### 전제 조건
@@ -103,13 +111,14 @@ ROAD Platform
 
 ### Phase 1 (Current) - MVP
 - ✅ 프로젝트 구조 설정
-- ⏳ LLM Playground 구현
-- ⏳ Prompt Management 구현
+- ✅ LLM Playground 구현
+- ✅ Prompt Management 구현
+- ✅ **RAG Builder 구현** (새로 추가!)
 
-### Phase 2 - RAG Builder
-- 🔄 Visual RAG Pipeline Builder
-- 🔄 Document Processing
+### Phase 2 - Advanced RAG Features
+- 🔄 Document Processing Pipeline
 - 🔄 Vector Database Integration
+- 🔄 Advanced Embedding Models
 
 ### Phase 3 - Advanced Features
 - 🔄 A/B Testing

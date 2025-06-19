@@ -235,7 +235,7 @@ const ModelSelector = ({
               
               return (
                 <div className="p-3 bg-light-muted dark:bg-dark-muted rounded-lg">
-                  <div className="space-y-2 text-sm">
+                  <div className="grid grid-cols-1 gap-2 text-sm">
                     <div>
                       <span className="font-medium text-light-primary dark:text-dark-primary">
                         Provider:
@@ -261,7 +261,7 @@ const ModelSelector = ({
                       </span>
                     </div>
                     {model.description && (
-                      <div>
+                      <div className="col-span-2">
                         <span className="font-medium text-light-primary dark:text-dark-primary">
                           Description:
                         </span>

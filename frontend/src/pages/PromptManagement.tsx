@@ -60,33 +60,57 @@ export default function PromptManagement() {
   return (
     <div className="p-6 h-full flex flex-col">
       <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            {showBackButton && (
-              <Button
-                variant="ghost"
-                onClick={() => setCurrentView('library')}
-                icon={<ArrowLeft className="w-4 h-4" />}
-              >
-                Back to Library
-              </Button>
-            )}
-            <div>
-              <h1 className="text-2xl font-bold text-light-primary dark:text-dark-primary">
-                Prompt Management
-              </h1>
-              <p className="text-light-secondary dark:text-dark-secondary mt-1">
-                {currentView === 'library' && 'Manage and organize your prompt library'}
-                {currentView === 'editor' && (isCreating ? 'Create a new prompt' : 'Edit prompt')}
-                {currentView === 'templates' && 'Choose from pre-built templates'}
-              </p>
+        {(currentView === 'editor' || currentView === 'templates') ? (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div>
+                <h1 className="text-2xl font-bold text-light-primary dark:text-dark-primary">
+                  Prompt Management
+                </h1>
+                <p className="text-light-secondary dark:text-dark-secondary mt-1">
+                  {currentView === 'editor'
+                    ? (isCreating ? 'Create a new prompt' : 'Edit prompt')
+                    : 'Choose from pre-built templates'}
+                </p>
+              </div>
+              <div className="flex items-center space-x-3">
+                <span className="px-3 py-1 text-sm bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-full">
+                  Active
+                </span>
+              </div>
             </div>
+            <Button
+              variant="ghost"
+              onClick={() => setCurrentView('library')}
+              icon={<ArrowLeft className="w-4 h-4" />}
+            >
+              Back to Library
+            </Button>
           </div>
-          
-          <div className="flex items-center space-x-3">
-            <span className="px-3 py-1 text-sm bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-full">
-              Active
-            </span>
+        ) : (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              {showBackButton && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setCurrentView('library')}
+                  icon={<ArrowLeft className="w-4 h-4" />}
+                >
+                  Back to Library
+                </Button>
+              )}
+              <div>
+                <h1 className="text-2xl font-bold text-light-primary dark:text-dark-primary">
+                  Prompt Management
+                </h1>
+                <p className="text-light-secondary dark:text-dark-secondary mt-1">
+                  {currentView === 'library' && 'Manage and organize your prompt library'}
+                </p>
+              </div>
+              <span className="px-3 py-1 text-sm bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-full">
+                Active
+              </span>
+            </div>
             {currentView === 'library' && (
               <div className="flex space-x-2">
                 <Button
@@ -104,14 +128,14 @@ export default function PromptManagement() {
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
 
       <div className="flex-1 min-h-0">
         {currentView === 'library' && (
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 h-full">
             {/* Prompt Library */}
-            <div className="xl:col-span-2">
+            <div className="xl:col-span-1">
               <PromptLibrary
                 onSelectPrompt={handleSelectPrompt}
                 onEditPrompt={handleEditPrompt}
@@ -122,7 +146,7 @@ export default function PromptManagement() {
             </div>
 
             {/* Selected Prompt Preview */}
-            <div className="xl:col-span-1">
+            <div className="xl:col-span-2">
               {selectedPrompt ? (
                 <div className="bg-light-panel dark:bg-dark-panel border border-light-border dark:border-dark-border rounded-lg p-6 h-full">
                   <div className="flex items-center justify-between mb-4">

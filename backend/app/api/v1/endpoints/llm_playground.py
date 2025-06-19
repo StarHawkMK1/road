@@ -1,3 +1,4 @@
+# backend/app/api/v1/endpoints/llm_playground.py
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
@@ -13,6 +14,8 @@ from app.schemas.llm import (
     StreamChunk,
     ModelInfo,
     ModelListResponse,
+    ProviderInfo,
+    ProviderListResponse,
     ConversationListResponse,
     ConversationDetail,
     ChatMessage,
@@ -23,11 +26,57 @@ from app.services.conversation_service import ConversationService
 
 router = APIRouter()
 
+@router.get("/providers", response_model=ProviderListResponse)
+async def get_available_providers():
+    """Get list of available LLM providers."""
+    try:
+        # Get provider status from factory
+        provider_status = LLMFactory.get_provider_status()
+        
+        providers = []
+        for provider_id, status in provider_status.items():
+            # Map provider IDs to readable names
+            provider_names = {
+                "openai": "OpenAI",
+                "anthropic": "Anthropic",
+                "google": "Google",
+                "groq": "Groq",
+                "huggingface": "Hugging Face"
+            }
+            
+            provider_descriptions = {
+                "openai": "OpenAI's GPT models including GPT-4 and GPT-3.5",
+                "anthropic": "Anthropic's Claude models for conversational AI",
+                "google": "Google's Gemini models for advanced reasoning",
+                "groq": "Groq's high-speed inference with open source models",
+                "huggingface": "Hugging Face's open source language models"
+            }
+            
+            providers.append(ProviderInfo(
+                id=provider_id,
+                name=provider_names.get(provider_id, provider_id.title()),
+                description=provider_descriptions.get(provider_id, f"{provider_id.title()} LLM provider"),
+                available=status["available"],
+                configured=status["available"],  # Available means properly configured
+                error=status.get("error")
+            ))
+        
+        return ProviderListResponse(
+            providers=providers,
+            total=len(providers)
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get providers: {str(e)}")
+
 @router.get("/models", response_model=ModelListResponse)
-async def get_available_models():
+async def get_available_models(provider: Optional[str] = Query(None, description="Filter by provider")):
     """Get list of available LLM models."""
     try:
-        models = LLMFactory.get_available_models()
+        if provider:
+            models = LLMFactory.get_provider_models(provider)
+        else:
+            models = LLMFactory.get_available_models()
+        
         return ModelListResponse(
             models=models,
             total=len(models)
@@ -43,12 +92,12 @@ async def chat_with_llm(
     """Send a chat message to an LLM model."""
     try:
         # Get LLM service
-        llm_service = LLMFactory.get_service(request.model_provider)
+        llm_service = LLMFactory.get_service(request.llm_model_provider)
         
         # Generate response
         start_time = datetime.now()
         response = await llm_service.chat(
-            model_name=request.model_name,
+            model_name=request.llm_model_name,
             messages=request.messages,
             system_prompt=request.system_prompt,
             parameters=request.parameters
@@ -68,8 +117,8 @@ async def chat_with_llm(
             conversation_service = ConversationService(db)
             await conversation_service.save_conversation(
                 session_id=request.session_id,
-                model_name=request.model_name,
-                model_provider=request.model_provider,
+                llm_model_name=request.llm_model_name,
+                llm_model_provider=request.llm_model_provider,
                 system_prompt=request.system_prompt,
                 messages=request.messages + [assistant_message],
                 parameters=request.parameters
@@ -77,8 +126,8 @@ async def chat_with_llm(
         
         return ChatResponse(
             message=assistant_message,
-            model_name=request.model_name,
-            model_provider=request.model_provider.value,
+            llm_model_name=request.llm_model_name,
+            llm_model_provider=request.llm_model_provider.value,
             parameters=request.parameters,
             usage=response.usage,
             response_time=response_time,
@@ -96,13 +145,13 @@ async def stream_chat_with_llm(
     """Stream chat responses from an LLM model."""
     try:
         # Get LLM service
-        llm_service = LLMFactory.get_service(request.model_provider)
+        llm_service = LLMFactory.get_service(request.llm_model_provider)
         
         async def generate_stream():
             try:
                 full_content = ""
                 async for chunk in llm_service.stream_chat(
-                    model_name=request.model_name,
+                    model_name=request.llm_model_name,
                     messages=request.messages,
                     system_prompt=request.system_prompt,
                     parameters=request.parameters
@@ -135,8 +184,8 @@ async def stream_chat_with_llm(
                     conversation_service = ConversationService(db)
                     await conversation_service.save_conversation(
                         session_id=request.session_id,
-                        model_name=request.model_name,
-                        model_provider=request.model_provider,
+                        llm_model_name=request.llm_model_name,
+                        llm_model_provider=request.llm_model_provider,
                         system_prompt=request.system_prompt,
                         messages=request.messages + [assistant_message],
                         parameters=request.parameters
@@ -167,7 +216,7 @@ async def stream_chat_with_llm(
 async def get_conversations(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(50, ge=1, le=100, description="Items per page"),
-    model_provider: Optional[str] = Query(None, description="Filter by model provider"),
+    llm_model_provider: Optional[str] = Query(None, description="Filter by model provider"),
     db: Session = Depends(get_db)
 ):
     """Get list of conversation summaries."""
@@ -176,7 +225,7 @@ async def get_conversations(
         result = await conversation_service.get_conversations(
             page=page,
             page_size=page_size,
-            model_provider=model_provider
+            llm_model_provider=llm_model_provider
         )
         return result
     except Exception as e:
@@ -246,4 +295,4 @@ async def test_llm_connection(
             "model_name": model_name or "default",
             "status": "error",
             "message": str(e)
-        } 
+        }

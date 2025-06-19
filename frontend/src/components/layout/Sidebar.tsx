@@ -12,7 +12,8 @@ import {
   Database,
   BarChart3,
   GitBranch,
-  Zap
+  Zap,
+  Workflow
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -44,9 +45,8 @@ const menuItems: MenuItem[] = [
     id: 'rag-builder',
     label: 'RAG Builder',
     path: '/rag-builder',
-    icon: Settings,
-    isAvailable: false,
-    comingSoon: true
+    icon: Workflow,
+    isAvailable: true
   },
   {
     id: 'opensearch',

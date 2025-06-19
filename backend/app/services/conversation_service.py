@@ -1,3 +1,4 @@
+# backend/app/services/conversation_service.py
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, func
 from typing import List, Optional
@@ -23,8 +24,8 @@ class ConversationService:
     async def save_conversation(
         self,
         session_id: str,
-        model_name: str,
-        model_provider: LLMProvider,
+        llm_model_name: str,
+        llm_model_provider: LLMProvider,
         system_prompt: Optional[str],
         messages: List[ChatMessage],
         parameters: LLMParameters
@@ -58,8 +59,8 @@ class ConversationService:
             # Create new conversation
             new_conversation = Conversation(
                 session_id=session_id,
-                model_name=model_name,
-                model_provider=model_provider.value if hasattr(model_provider, 'value') else model_provider,
+                model_name=llm_model_name,
+                model_provider=llm_model_provider.value if hasattr(llm_model_provider, 'value') else llm_model_provider,
                 system_prompt=system_prompt,
                 messages=messages_dict,
                 parameters=parameters_dict
@@ -73,14 +74,14 @@ class ConversationService:
         self,
         page: int = 1,
         page_size: int = 50,
-        model_provider: Optional[str] = None
+        llm_model_provider: Optional[str] = None
     ) -> ConversationListResponse:
         """Get paginated list of conversation summaries."""
         query = self.db.query(Conversation)
         
         # Apply filters
-        if model_provider:
-            query = query.filter(Conversation.model_provider == model_provider)
+        if llm_model_provider:
+            query = query.filter(Conversation.model_provider == llm_model_provider)
         
         # Get total count
         total = query.count()
@@ -96,8 +97,8 @@ class ConversationService:
             
             summaries.append(ConversationSummary(
                 session_id=conv.session_id,
-                model_name=conv.model_name,
-                model_provider=conv.model_provider,
+                llm_model_name=conv.model_name,
+                llm_model_provider=conv.model_provider,
                 message_count=message_count,
                 first_message_at=conv.created_at,
                 last_message_at=conv.updated_at,
@@ -135,8 +136,8 @@ class ConversationService:
         
         return ConversationDetail(
             session_id=conversation.session_id,
-            model_name=conversation.model_name,
-            model_provider=conversation.model_provider,
+            llm_model_name=conversation.model_name,
+            llm_model_provider=conversation.model_provider,
             system_prompt=conversation.system_prompt,
             messages=messages,
             parameters=parameters,
@@ -178,8 +179,8 @@ class ConversationService:
             
             summaries.append(ConversationSummary(
                 session_id=conv.session_id,
-                model_name=conv.model_name,
-                model_provider=conv.model_provider,
+                llm_model_name=conv.model_name,
+                llm_model_provider=conv.model_provider,
                 message_count=message_count,
                 first_message_at=conv.created_at,
                 last_message_at=conv.updated_at,
@@ -203,4 +204,4 @@ class ConversationService:
                 total_chars += len(msg["content"])
         
         # Rough estimation: ~4 characters per token
-        return total_chars // 4 
+        return total_chars // 4

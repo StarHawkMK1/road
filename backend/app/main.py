@@ -1,3 +1,17 @@
+# road/backend/app/main.py
+
+# import sys
+# import os
+
+# project_backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# if project_backend_dir not in sys.path:
+#     sys.path.insert(0, project_backend_dir)
+
+# print(f"DEBUG: Current working directory: {os.getcwd()}")
+# print(f"DEBUG: __file__: {__file__}")
+# print(f"DEBUG: Calculated project_backend_dir: {project_backend_dir}")
+# print(f"DEBUG: sys.path after modification: {sys.path}")
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -5,7 +19,7 @@ import os
 from dotenv import load_dotenv
 
 from app.core.config import settings
-from app.api.v1.endpoints import llm_playground, prompts
+from app.api.v1.endpoints import llm_playground, prompts, rag_builder
 from app.db.session import engine
 from app.db.models import Base
 
@@ -82,6 +96,12 @@ app.include_router(
     prompts.router,
     prefix="/api/v1/prompts",
     tags=["Prompt Management"]
+)
+
+app.include_router(
+    rag_builder.router,
+    prefix="/api/v1/rag-builder",
+    tags=["RAG Builder"]
 )
 
 if __name__ == "__main__":

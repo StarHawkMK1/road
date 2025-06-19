@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps) {
         
         {/* Page content */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">
+          <div className="mx-auto" style={{ maxWidth: '100rem' }}>
             {children}
           </div>
         </main>
