@@ -43,9 +43,9 @@ class OpenAIProvider(BaseLLMProvider):
                 }
             ),
             ModelInfo(
-                name="gpt-4-turbo-preview",
+                name="gpt-4.1-mini",
                 provider=LLMProvider.OPENAI,
-                description="GPT-4 Turbo - Faster and more cost-effective",
+                description="지능, 속도, 비용 측면에서 균형 잡힌 GPT-4.1의 소형 모델",
                 max_tokens=128000,
                 supports_streaming=True,
                 supports_functions=True,
@@ -58,9 +58,69 @@ class OpenAIProvider(BaseLLMProvider):
                 }
             ),
             ModelInfo(
-                name="gpt-3.5-turbo",
+                name="gpt-4.1-nano",
                 provider=LLMProvider.OPENAI,
-                description="GPT-3.5 Turbo - Fast and efficient for most tasks",
+                description="빠르고 비용 효율적인 GPT-4.1의 소형 모델",
+                max_tokens=32768,
+                supports_streaming=True,
+                supports_functions=True,
+                parameters={
+                    "temperature": {"min": 0, "max": 2, "default": 1},
+                    "max_tokens": {"min": 1, "max": 32768, "default": 20000},
+                    "top_p": {"min": 0, "max": 1, "default": 1},
+                    "presence_penalty": {"min": -2, "max": 2, "default": 0},
+                    "frequency_penalty": {"min": -2, "max": 2, "default": 0}
+                }
+            ),
+            ModelInfo(
+                name="o3",
+                provider=LLMProvider.OPENAI,
+                description="OpenAI의 가장 강력한 추론 모델",
+                max_tokens=100000,
+                supports_streaming=True,
+                supports_functions=True,
+                parameters={
+                    "temperature": {"min": 0, "max": 2, "default": 1},
+                    "max_tokens": {"min": 1, "max": 100000, "default": 50000},
+                    "top_p": {"min": 0, "max": 1, "default": 1},
+                    "presence_penalty": {"min": -2, "max": 2, "default": 0},
+                    "frequency_penalty": {"min": -2, "max": 2, "default": 0}
+                }
+            ),
+            ModelInfo(
+                name="o4-mini",
+                provider=LLMProvider.OPENAI,
+                description="빠르고 저렴한 추론 모델",
+                max_tokens=100000,
+                supports_streaming=True,
+                supports_functions=True,
+                parameters={
+                    "temperature": {"min": 0, "max": 2, "default": 1},
+                    "max_tokens": {"min": 1, "max": 100000, "default": 50000},
+                    "top_p": {"min": 0, "max": 1, "default": 1},
+                    "presence_penalty": {"min": -2, "max": 2, "default": 0},
+                    "frequency_penalty": {"min": -2, "max": 2, "default": 0}
+                }
+            ),
+            ModelInfo(
+                name="o3-mini",
+                provider=LLMProvider.OPENAI,
+                description="o3의 소형 모델",
+                max_tokens=100000,
+                supports_streaming=True,
+                supports_functions=True,
+                parameters={
+                    "temperature": {"min": 0, "max": 2, "default": 1},
+                    "max_tokens": {"min": 1, "max": 100000, "default": 50000},
+                    "top_p": {"min": 0, "max": 1, "default": 1},
+                    "presence_penalty": {"min": -2, "max": 2, "default": 0},
+                    "frequency_penalty": {"min": -2, "max": 2, "default": 0}
+                }
+            ),
+            ModelInfo(
+                name="chatgpt-4o-latest",
+                provider=LLMProvider.OPENAI,
+                description="ChatGPT에서 사용되는 최신 GPT-4o 모델",
                 max_tokens=4096,
                 supports_streaming=True,
                 supports_functions=True,
@@ -73,15 +133,30 @@ class OpenAIProvider(BaseLLMProvider):
                 }
             ),
             ModelInfo(
-                name="gpt-3.5-turbo-16k",
+                name="gpt-4o",
                 provider=LLMProvider.OPENAI,
-                description="GPT-3.5 Turbo with 16K context window",
+                description="빠르고 지능적이며 유연한 GPT 모델",
                 max_tokens=16384,
                 supports_streaming=True,
                 supports_functions=True,
                 parameters={
                     "temperature": {"min": 0, "max": 2, "default": 1},
-                    "max_tokens": {"min": 1, "max": 16384, "default": 1000},
+                    "max_tokens": {"min": 1, "max": 16384, "default": 10000},
+                    "top_p": {"min": 0, "max": 1, "default": 1},
+                    "presence_penalty": {"min": -2, "max": 2, "default": 0},
+                    "frequency_penalty": {"min": -2, "max": 2, "default": 0}
+                }
+            ),
+            ModelInfo(
+                name="gpt-4o-mini",
+                provider=LLMProvider.OPENAI,
+                description="집중적인 작업을 위한 빠르고 저렴한 gpt-4o의 소형 모델",
+                max_tokens=16384,
+                supports_streaming=True,
+                supports_functions=True,
+                parameters={
+                    "temperature": {"min": 0, "max": 2, "default": 1},
+                    "max_tokens": {"min": 1, "max": 16384, "default": 10000},
                     "top_p": {"min": 0, "max": 1, "default": 1},
                     "presence_penalty": {"min": -2, "max": 2, "default": 0},
                     "frequency_penalty": {"min": -2, "max": 2, "default": 0}
